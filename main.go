@@ -1,7 +1,5 @@
 package main
 
-// go fmt && go build . && ./userns-nix
-
 /*
 #cgo CFLAGS: -Wall
 #define _GNU_SOURCE
@@ -40,6 +38,8 @@ import (
 	"strconv"
 	"syscall"
 )
+
+// go fmt && go build . && ./userns-nix
 
 const startScript = `
 # set -x
