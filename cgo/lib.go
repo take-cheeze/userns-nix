@@ -13,7 +13,7 @@ package cgo
 int uid = 0;
 int gid = 0;
 
-__attribute((constructor(101))) void enter_userns(void) {
+__attribute((constructor)) void enter_userns(void) {
 	uid = getuid();
 	gid = getgid();
 	int f = CLONE_NEWNS;
@@ -26,7 +26,7 @@ __attribute((constructor(101))) void enter_userns(void) {
 		puts("unshare fail!\n");
 		exit(1);
 	}
-	puts("clone success!\n");
+	puts("unshare success!\n");
 
 	return;
 }

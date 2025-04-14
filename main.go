@@ -1,8 +1,8 @@
 package main
 
 import (
-	C "github.com/take-cheeze/userns-nix/cgo"
 	"al.essio.dev/pkg/shellescape"
+	C "github.com/take-cheeze/userns-nix/cgo"
 
 	"fmt"
 	"log"
