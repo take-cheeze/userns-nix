@@ -8,6 +8,7 @@ package main
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
 
 int uid = 0;
 int gid = 0;
@@ -21,6 +22,7 @@ __attribute((constructor(101))) void enter_userns(void) {
 		puts("with user namespace!\n");
 	}
 	if (unshare(f) < 0) {
+		perror(strerror(f));
 		puts("unshare fail!\n");
 		exit(1);
 	}
