@@ -67,7 +67,7 @@ func main() {
 	// log.Printf("original uid: %d gid: %d", C.uid, C.uid)
 	// log.Printf("current uid: %d gid: %d", os.Getuid(), os.Getgid())
 
-	if os.Getuid() != 0 {
+	if C.uid != 0 {
 		err := os.WriteFile("/proc/self/uid_map", []byte(fmt.Sprintf("%d %d 1\n", C.uid, C.uid)), 0640)
 		if err != nil {
 			log.Panicf("failed user map: %s", err)
