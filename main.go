@@ -1,39 +1,8 @@
 package main
 
-/*
-// Originally from https://github.com/howardjohn/unshare-go
-#cgo CFLAGS: -Wall
-#define _GNU_SOURCE
-#include <sched.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <string.h>
-
-int uid = 0;
-int gid = 0;
-
-__attribute((constructor(101))) void enter_userns(void) {
-	uid = getuid();
-	gid = getgid();
-	int f = CLONE_NEWNS;
-	if (uid != 0) {
-		f |= CLONE_NEWUSER;
-		puts("with user namespace!\n");
-	}
-	if (unshare(f) < 0) {
-		perror(strerror(f));
-		puts("unshare fail!\n");
-		exit(1);
-	}
-	puts("clone success!\n");
-
-	return;
-}
-*/
-import "C"
-
 import (
+	C "github.com/take-cheeze/userns-nix/cgo"
+
 	"fmt"
 	"log"
 	"os"
@@ -77,9 +46,9 @@ func main() {
 		log.Panicf("%s", err)
 	}
 
-	if C.uid != 0 {
+	if C.Uid() != 0 {
 		log.Print("mapping users")
-		err := os.WriteFile("/proc/self/uid_map", []byte(fmt.Sprintf("%d %d 1\n", C.uid, C.uid)), 0640)
+		err := os.WriteFile("/proc/self/uid_map", []byte(fmt.Sprintf("%d %d 1\n", C.Uid(), C.Uid())), 0640)
 		if err != nil {
 			log.Panicf("failed user map: %s", err)
 		}
@@ -87,7 +56,7 @@ func main() {
 		if err != nil {
 			log.Panicf("failed setgroups: %s", err)
 		}
-		err = os.WriteFile("/proc/self/gid_map", []byte(fmt.Sprintf("%d %d 1\n", C.gid, C.gid)), 0640)
+		err = os.WriteFile("/proc/self/gid_map", []byte(fmt.Sprintf("%d %d 1\n", C.Gid(), C.Gid())), 0640)
 		if err != nil {
 			log.Panicf("failed group map: %s", err)
 		}
