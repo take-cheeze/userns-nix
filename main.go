@@ -41,32 +41,7 @@ const startScript = `
 # set -x
 nix_init_script="$XDG_STATE_HOME/nix/profile/etc/profile.d/nix.sh"
 if [ ! -f "${nix_init_script}" ] ; then
-	# Workarouds for incomplete supports of $XDG_STATE_HOME in nix eco-systems
-	ln -s $(readlink $HOME/.nix-profile) $HOME/.nix-profile.old
-
-	mv ~/.local/state ~/.local/state.old
-
-	mkdir -p ~/.local/state/nix/profiles
-
-	mv ~/.nix-channels ~/.nix-channels.old
-
-	cat >/tmp/nix-extra.conf <<EOS
-use-xdg-base-directories = true
-EOS
-	sh <(curl -L https://nixos.org/nix/install) --no-daemon --nix-extra-conf-file /tmp/nix-extra.conf
-
-	mv ~/.nix-channels.old ~/.nix-channels
-
-	mv ~/.local/state/nix/profiles/* $XDG_STATE_HOME/nix/profiles
-	rm -f $XDG_STATE_HOME/nix/profile
-	ln -s $XDG_STATE_HOME/nix/profiles/profile $XDG_STATE_HOME/nix/profile
-
-	rm -rf ~/.local/state
-	mv ~/.local/state.old ~/.local/state
-
-	mv ~/.nix-profile $XDG_STATE_HOME/nix/profile
-	ln -s $(readlink $HOME/.nix-profile.old) $HOME/.nix-profile
-	rm -f $HOME/.nix-profile.old
+	sh <(curl -L https://nixos.org/nix/install) --no-daemon
 fi
 
 . "${nix_init_script}"
@@ -167,6 +142,8 @@ func main() {
 	if err != nil {
 		log.Panicf("%s", err)
 	}
+	// Check it with `nix config show | grep xdg`
+	os.Setenv("NIX_CONFIG", "use-xdg-base-directories = true\n")
 
 	err = syscall.Chroot(userRoot)
 	if err != nil {
