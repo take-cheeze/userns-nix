@@ -20,6 +20,7 @@ __attribute((constructor(101))) void enter_userns(void) {
 		puts("with user namespace!\n");
 	}
 	if (unshare(f) < 0) {
+		puts("unshare fail!\n");
 		exit(1);
 	}
 	puts("clone success!\n");
