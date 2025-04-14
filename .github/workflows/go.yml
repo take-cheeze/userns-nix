@@ -26,7 +26,6 @@ jobs:
 
     - name: test
       run: |
-        gcc
         ./userns-nix test 1 = 1
         ./userns-nix echo test
         ./userns-nix nix profile install nixpkgs#bash
