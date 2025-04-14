@@ -19,15 +19,13 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
-        go-version: '1.24'
+        go-version: '1.24.1'
 
     - name: Build
       run: go build -v .
 
     - name: test
       run: |
-        nm ./userns-nix
-        ldd ./userns-nix
         ./userns-nix test 1 = 1
         ./userns-nix echo test
         ./userns-nix nix profile install nixpkgs#bash
