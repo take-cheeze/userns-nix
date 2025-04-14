@@ -1,6 +1,7 @@
 package main
 
 /*
+// Originally from https://github.com/howardjohn/unshare-go
 #cgo CFLAGS: -Wall
 #define _GNU_SOURCE
 #include <sched.h>
