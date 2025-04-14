@@ -1,2 +1,4 @@
+al.essio.dev/pkg/shellescape v1.6.0 h1:NxFcEqzFSEVCGN2yq7Huv/9hyCEGVa/TncnOOBBeXHA=
+al.essio.dev/pkg/shellescape v1.6.0/go.mod h1:6sIqp7X2P6mThCQ7twERpZTuigpr6KbZWtls1U8I890=
 github.com/howardjohn/unshare-go v0.5.0 h1:pHDqBG4bWRjs18IC+axJb3Tmcuau5sx9j1ODaSHUlyI=
 github.com/howardjohn/unshare-go v0.5.0/go.mod h1:cJjyFAN6qTA70ovC2VR23iAZuJ8X3J/ibAbT693pJ8g=

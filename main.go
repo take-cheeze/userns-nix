@@ -2,6 +2,7 @@ package main
 
 import (
 	C "github.com/take-cheeze/userns-nix/cgo"
+	"al.essio.dev/pkg/shellescape"
 
 	"fmt"
 	"log"
@@ -135,7 +136,12 @@ func main() {
 		log.Panicf("chdir failed: %s", err)
 	}
 
-	cmd := exec.Command("bash", "-c", startScript+"\n"+os.Getenv("SHELL"))
+	cmds := os.Getenv("SHELL")
+	if len(os.Args) > 1 {
+		cmds = " " + shellescape.QuoteCommand(os.Args[1:])
+	}
+
+	cmd := exec.Command("bash", "-c", startScript+"\n"+cmds)
 	cmd.Stdin = os.Stdin
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
