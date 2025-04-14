@@ -37,11 +37,16 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"syscall"
 )
 
 // go fmt && go build . && ./userns-nix
+
+func init() {
+	runtime.LockOSThread()
+}
 
 const startScript = `
 # set -x
@@ -69,9 +74,6 @@ func main() {
 	if err != nil {
 		log.Panicf("%s", err)
 	}
-
-	// log.Printf("original uid: %d gid: %d", C.uid, C.uid)
-	// log.Printf("current uid: %d gid: %d", os.Getuid(), os.Getgid())
 
 	if C.uid != 0 {
 		log.Print("mapping users")
