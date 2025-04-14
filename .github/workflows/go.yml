@@ -22,14 +22,10 @@ jobs:
         go-version: '1.24'
 
     - name: Build
-      run: go build -v ./...
-
-    # - name: Test
-    #   run: go test -v ./...
+      run: CGO_ENABLED=1 go build -v ./...
 
     - name: test
       run: |
-        sudo sysctl -w kernel.unprivileged_userns_clone=1
         ./userns-nix test 1 = 1
         ./userns-nix echo test
         ./userns-nix nix profile install nixpkgs#bash
