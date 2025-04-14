@@ -28,6 +28,8 @@ __attribute((constructor(101))) void enter_userns(void) {
 import "C"
 
 import (
+	"al.essio.dev/pkg/shellescape"
+
 	"fmt"
 	"log"
 	"os"
@@ -155,7 +157,12 @@ func main() {
 		log.Panicf("chdir failed: %s", err)
 	}
 
-	cmd := exec.Command("bash", "-c", startScript+"\n"+os.Getenv("SHELL"))
+	cmds := os.Getenv("SHELL")
+	if len(os.Args) > 1 {
+		cmds = " " + shellescape.QuoteCommand(os.Args[1:])
+	}
+
+	cmd := exec.Command("bash", "-c", startScript+"\n"+cmds)
 	cmd.Stdin = os.Stdin
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
