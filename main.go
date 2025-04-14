@@ -8,6 +8,7 @@ package main
 #include <sched.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 
 int uid = 0;
 int gid = 0;
@@ -18,11 +19,14 @@ __attribute((constructor(101))) void enter_userns(void) {
 	int f = CLONE_NEWNS;
 	if (uid != 0) {
 		f |= CLONE_NEWUSER;
+		puts("with user namespace!\n");
 	}
-    if (unshare(f) < 0) {
-        exit(1);
-    }
-    return;
+	if (unshare(f) < 0) {
+		exit(1);
+	}
+	puts("clone success!\n");
+
+	return;
 }
 */
 import "C"
@@ -68,6 +72,7 @@ func main() {
 	// log.Printf("current uid: %d gid: %d", os.Getuid(), os.Getgid())
 
 	if C.uid != 0 {
+		log.Print("mapping users")
 		err := os.WriteFile("/proc/self/uid_map", []byte(fmt.Sprintf("%d %d 1\n", C.uid, C.uid)), 0640)
 		if err != nil {
 			log.Panicf("failed user map: %s", err)
