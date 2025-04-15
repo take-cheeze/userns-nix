@@ -21,19 +21,18 @@ jobs:
 
     - name: test
       run: |
-        cat /proc/self/uid_map
-        sudo sysctl kernel.unprivileged_userns_clone
-        echo $UID
-        id -a
+        set -x
+        echo $SHELL
         cat /etc/subuid
         cat /etc/subgid
-        exit 1
-    # - name: test
-    #   run: |
-    #     set -x
-    #     echo $SHELL
-    #     ln -s ./target/debug/userns-nix ./userns-nix
-    #     ./userns-nix test 1 = 1
-    #     ./userns-nix echo test
-    #     ./userns-nix nix profile install nixpkgs#bash
-    #     ./userns-nix which bash
+        id -a
+        cat /proc/self/uid_map
+        sudo sysctl kernel.unprivileged_userns_clone
+        sudo apt install psmisc
+        pstree
+
+        ln -s ./target/debug/userns-nix ./userns-nix
+        ./userns-nix test 1 = 1
+        ./userns-nix echo test
+        ./userns-nix nix profile install nixpkgs#bash
+        ./userns-nix which bash
