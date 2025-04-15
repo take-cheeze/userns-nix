@@ -22,6 +22,8 @@ jobs:
     - name: test
       run: |
         cat /proc/self/uid_map
+        sudo sysctl kernel.unprivileged_userns_clone
+        exit 1
     # - name: test
     #   run: |
     #     set -x
