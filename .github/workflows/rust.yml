@@ -1,0 +1,30 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: Rust
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build
+      run: cargo build
+
+    # - name: test
+    #   run: |
+    #     set -x
+    #     echo $SHELL
+    #     ln -s ./target/debug/userns-nix ./userns-nix
+    #     ./userns-nix test 1 = 1
+    #     ./userns-nix echo test
+    #     ./userns-nix nix profile install nixpkgs#bash
+    #     ./userns-nix which bash
