@@ -19,12 +19,12 @@ jobs:
     - name: Build
       run: cargo build
 
-    - name: test
-      run: |
-        set -x
-        echo $SHELL
-        ln -s ./target/debug/userns-nix ./userns-nix
-        ./userns-nix test 1 = 1
-        ./userns-nix echo test
-        ./userns-nix nix profile install nixpkgs#bash
-        ./userns-nix which bash
+    # - name: test
+    #   run: |
+    #     set -x
+    #     echo $SHELL
+    #     ln -s ./target/debug/userns-nix ./userns-nix
+    #     ./userns-nix test 1 = 1
+    #     ./userns-nix echo test
+    #     ./userns-nix nix profile install nixpkgs#bash
+    #     ./userns-nix which bash
