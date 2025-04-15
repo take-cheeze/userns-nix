@@ -19,6 +19,9 @@ jobs:
     - name: Build
       run: cargo build
 
+    - name: test
+      run: |
+        cat /proc/self/uid_map
     # - name: test
     #   run: |
     #     set -x
