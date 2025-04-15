@@ -35,10 +35,11 @@ fn main() -> std::io::Result<()> {
 	let xdg_state = config_dir.join("xdg-state");
 	fs::create_dir_all(&xdg_state)?;
 
-    let mut cmds = env::var("SHELL").map_err(|e| std::io::Error::other(e.to_string()))?;
-	if env::args().len() > 1 {
-		cmds = join(env::args().skip(1).map(|v| shell_escape::escape(v.into())), " ")
-	}
+    let cmds = if env::args().len() > 1 {
+		join(env::args().skip(1).map(|v| shell_escape::escape(v.into())), " ")
+	} else {
+        env::var("SHELL").map_err(|e| std::io::Error::other(e.to_string()))?
+    };
 
     let mut clone_flags = sched::CloneFlags::empty();
     if uid.as_raw() != 0 {
