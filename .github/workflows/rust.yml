@@ -29,6 +29,9 @@ jobs:
         echo $UID
         cat /etc/subuid
         cat /etc/subgid
+        echo $UID
+        cat /etc/subuid
+        cat /etc/subgid
         exit 1
     # - name: test
     #   run: |
