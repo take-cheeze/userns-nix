@@ -24,12 +24,7 @@ jobs:
         cat /proc/self/uid_map
         sudo sysctl kernel.unprivileged_userns_clone
         echo $UID
-        cat /etc/subuid
-        cat /etc/subgid
-        echo $UID
-        cat /etc/subuid
-        cat /etc/subgid
-        echo $UID
+        id -a
         cat /etc/subuid
         cat /etc/subgid
         exit 1
