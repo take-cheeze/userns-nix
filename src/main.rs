@@ -11,7 +11,7 @@ use std::path::Path;
 use sys_mount;
 
 const START_SCRIPT: &str = r#"
-# set -x
+set -x
 nix_init_script="$XDG_STATE_HOME/nix/profile/etc/profile.d/nix.sh"
 if [ ! -f "${nix_init_script}" ] ; then
 	sh <(curl -L https://nixos.org/nix/install) --no-daemon
