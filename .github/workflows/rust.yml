@@ -30,6 +30,7 @@ jobs:
         sudo sysctl kernel.unprivileged_userns_clone
         sudo apt install psmisc
         pstree
+        cat /etc/passwd
 
         ln -s ./target/debug/userns-nix ./userns-nix
         ./userns-nix test 1 = 1
